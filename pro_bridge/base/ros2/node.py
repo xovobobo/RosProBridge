@@ -12,9 +12,17 @@ from base.service import ServicePendingMap
 from base.client.client_registry import BridgeClientRegistry
 
 
+def _ros_node_name(bridge_id: str) -> str:
+    """ROS 2 node names allow only alphanumerics and underscores."""
+    safe = "".join(
+        ch if ch.isalnum() or ch == "_" else "_" for ch in str(bridge_id)
+    )
+    return f"ProBridge_{safe or 'bridge'}"
+
+
 class ProBridgeRos2(ProBridgeBase, Node):
     def __init__(self, cfg: dict):
-        Node.__init__(self, "ProBridge_" + cfg["id"])  # type: ignore
+        Node.__init__(self, _ros_node_name(cfg["id"]))  # type: ignore
         self.loginfo = self.get_logger().info
         self.logwarn = self.get_logger().warning
         self.logerr = self.get_logger().error
