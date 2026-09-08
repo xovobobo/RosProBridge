@@ -8,7 +8,7 @@ from typing import Dict, Optional, Tuple
 
 KIND_SRV_REQ = 1
 KIND_SRV_RES = 2
-DEFAULT_SERVICE_TIMEOUT = 5.0
+DEFAULT_SERVICE_TIMEOUT = 15.0
 
 
 class PendingCall:
